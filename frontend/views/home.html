@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, inital-scale = 1.0">
+    	<meta name="apple-mobile-web-app-capable" content="yes">
+		<title>Paint Online</title>
+		<link rel="stylesheet" href="css/home.css">
+        <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
+    </head>
+
+    <body>
+        <script src = "/socket.io/socket.io.js"></script>
+        <div id = "home">
+            <div id = "home-left">
+                <div id = "player-data">
+                    <img id = "player-img"></img>
+                    <label id = "player-name"></label>
+                </div>
+            </div>
+
+            <div id = "home-right">
+                <div id = "home-top">
+                    <div id = "game-title">
+                        <label>Paint Online</label>
+                    </div>
+                </div>
+
+                <div id = "home-middle">
+                    <canvas id = "home-canvas"></canvas>
+                </div>
+
+                <div id = "home-bottom">
+                    <button id = "solo"; class = "mode-button"; onclick = "openSoloPopup()">Solo</button>
+                    <button id = "co-op"; class = "mode-button"; onclick = "openCoopPopup()">Co Op</button>
+                    <button id = "versus"; class = "mode-button"; disabled>Versus</button>
+                </div>
+
+                <div id = "solo-popup"; class = "home-popup">
+                    <div id = "solo-popup-top">Play solo?</div>
+                    <div id = "solo-popup-bottom">
+                        <button id = "play-solo" onclick = "startSoloGame()">Yes</button>
+                        <button id = "exit-solo" onclick = "closeSoloPopup()">No</button>
+                    </div>
+                </div>
+
+                <!-- COOP GAME POPUPS-->
+                <div id = "coop-popup"; class = "home-popup">
+                    <div id = "coop-popup-top">
+                        <button id  = "coop-popup-close"; onclick = "closeCoopPopup()">x</button>
+                    </div>
+
+                    <div id="coop-popup-bottom">
+                        <button onclick = "openJoinParty()">Join Match</button>
+                        <button onclick = "openCreateParty()">Create Match</button>
+                    </div>
+                </div>
+
+                <div id = "coop-join" class = "home-popup prejoin-popup">
+                    <div>
+                        <label>Enter Code:</label>
+                        <button onclick = "closeJoinParty()">x</button>
+                    </div>
+                    <input id = "code-input"></input>
+                    <button onclick = "joinMatch()">join</button>
+                </div>
+
+                <div id = "coop-create" class = "home-popup prejoin-popup">
+                    <div>
+                        <label id = "players-number-label">Players Number:</label>
+                        <button onclick="closeCreateParty()">x</button>
+                    </div>
+
+                    <select id = "players-select">
+
+                    </select>
+
+                    <button onclick = "createMatch()">create</button>
+                </div>
+
+
+
+
+                <div id = "coop-party" class = "home-popup">
+                    <div>
+                        <label id = "party-code">Code: #FG1DW2</label>
+                        <button id = "leave-party" onclick = "leaveParty()">x</button>
+                    </div>
+
+                    <div>
+                        <label id = "creator"></label>
+                    </div>
+
+                    <div>
+                        <label id = "players-joined"></label>
+                    </div>
+
+                    <div id = "players-joined-ids"></div>
+
+                    <div id = "start-button-holder">
+                        <button id = "start-game" onclick = "startCoopGame()">Start</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src = "../js/commons/constants.js"></script>
+        <script src = "../js/commons/functions.js"></script>
+        <script src = "../js/commons/storage.js"></script>
+        <script src = "../js/objects/Party.js"></script>
+        <script src = "../js/objects/Player.js"></script>
+        <script src = "../js/menus/home.js"></script>
+    </body>
+</html>

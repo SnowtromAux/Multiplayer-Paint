@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<meta name="apple-mobile-web-app-capable" content="yes">
+        <title>Paint Online</title>
+        <link rel="stylesheet" href="../css/game.css">
+        <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
+    </head>
+    <body>
+        <script src = "/socket.io/socket.io.js"></script>
+
+        <div id = "game">
+            <div id = "top">
+                <div id = "actions">
+                    <input type="file" id="imageLoader" name="imageLoader" accept="image/*" style="display: none;" onchange="loadImageToCanvas(event)" />
+                    <div id = "upload" onclick="triggerUpload()">Upload</div>
+                    <div id = "download" onclick = "downloadCanvas()">Download</div>
+                    <div id = "view"  style = "opacity: 0.3">View</div>
+                </div>
+
+                <div id = "leave">
+                    <img src = "../assets/leave.png" onclick = "leaveGame()">
+                </div>
+            </div>
+
+
+
+            <div id = "middle">
+                <div id = "trimmer-tools">
+                    <div id = "paste" onclick = "pasteSquare()">
+                        <img src = "../assets/paste.png">
+                    </div>
+
+                    <div id = "removing-tools">
+                        <div id = "copy" onclick = "copySquare()">
+                            <img src = "../assets/copy.png">
+                        </div>
+
+                        <div id = "cut" onclick = "cutSquare()">
+                            <img src = "../assets/cut.png">
+                        </div>
+
+                        <div id = "delete" onclick = "deleteSquare()">
+                            <img src = "../assets/delete.png">
+                        </div>
+                    </div>
+                </div>
+                <div id = "basic-tools">
+                    <div class = "tool" id = "pen" onclick = "triggerTool('pen')">
+                        <img src = "../assets/pen.png">
+                    </div>
+
+                    <div class = "tool" id = "color-picker" onclick = "triggerTool('color-picker')">
+                        <img src = "../assets/color-picker.png">
+                    </div>
+
+                    <div class = "tool" id = "rubber" onclick = "triggerTool('rubber')">
+                        <img src = "../assets/rubber.png">
+                    </div>
+
+                    <div class = "tool" id = "text" style = "opacity: 0.3">
+                        <img src = "../assets/text.png">
+                    </div>
+
+                    <div class = "tool" id = "paint-bucket" style = "opacity: 0.3">
+                        <img src = "../assets/bucket.png">
+                    </div>
+
+                    <div class = "tool" id = "select" onclick = "triggerTool('select')">
+                        <img src = "../assets/select.png">
+                    </div>
+                </div>
+
+                <div class = "dropdown-box">
+                    <div class = "dropdown-icon">
+                        <img src = "../assets/line-size.png">
+                    </div>
+
+                    <div class = "arrow" onclick = "triggerSizeDropdown()">
+                        <img id = "size-arrow" src = "../assets/arrow-down.png">
+                    </div>
+
+                    <div class = "dropdown" id = "size-dropdown">
+                        <div id = "dashed">
+                            <input type = "checkbox" onclick = "triggerDashed()">Dashed</input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "dropdown-box">
+                    <div class = "dropdown-icon">
+                        <img src = "../assets/drawing-tool.png">
+                    </div>
+
+                    <div class = "arrow" onclick = "triggerInstrumentDropdown()">
+                        <img id = "instruments-arrow" src = "../assets/arrow-down.png">
+                    </div>
+
+                    <div class = "dropdown" id = "instruments-dropdown">
+                        <div class = "tool instrument" id = "brush">
+                            <label id = "brush-text" onclick = "triggerTool('brush')">Brush</label>
+                        </div>
+
+                        <!-- <div class = "tool instrument" id = "spray">
+                            <label id = "spray-text">Spray</label>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div id = "shapes">
+                    <div class = "tool" id = "line" onclick = "triggerTool('line')">
+                        <img src = "../assets/line.png">
+                    </div>
+
+                    <div class = "tool" id = "circle" onclick = "triggerTool('circle')">
+                        <img src = "../assets/circle.png">
+                    </div>
+
+                    <div class = "tool" id = "triangle" onclick = "triggerTool('triangle')">
+                        <img src = "../assets/triangle.png">
+                    </div>
+
+                    <div class = "tool" id = "rectangle" onclick = "triggerTool('rectangle')">
+                        <img src = "../assets/rectangle.png">
+                    </div>
+
+                    <div class = "tool"  style = "opacity: 0.3">
+                        <img src = "../assets/curved-line.png">
+                    </div>
+
+                    <div class = "tool" id = "polygon" onclick = "triggerTool('polygon')">
+                        <img src = "../assets/polygon.png">
+                    </div>
+                </div>
+
+                <div id = "colors-wrapper">
+                    <div id = "color1">
+                        <div id = "color1_color"; onclick = "selectColor(1)"></div>
+                        <label>Color 1</label>
+                    </div>
+
+                    <div id = "color2">
+                        <div id = "color2_color"; onclick = "selectColor(2)"></div>
+                        <label>Color 2</label>
+                    </div>
+
+                    <div id = "colors"></div>
+
+                    <div id = "palette">
+                        <img src = "../assets/palette.png" onclick = "openPalettePopup()">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id = "bottom">
+                <canvas id = "gameCanvas"; width = "400px"; height = "300px"></canvas>
+                <!-- <div class = "resize" id = "resize_s"></div>
+                <div class = "resize" id = "resize_se"></div>
+                <div class = "resize" id = "resize_e"></div> -->
+                
+                <div id = "zoom-wrapper">
+                    <div id="zoom-level-display">100%</div>
+                    <input id="zoom-slider" type="range" min="25" max="300" value="100"></input>
+                    <div id = "zoom-apply-button">
+                        <img src = "../assets/zoom.png">
+                    </div>
+                </div>
+            </div>
+
+            <div id = 'palette-popup-wrapper'>
+                <div id = "palette-popup">
+                    <div id = "palette-popup-top">
+                        <div></div>
+                        <div id = "palette-title">
+                            <label>Palette Control</label>
+                        </div>
+                        <div id = "palette-exit">
+                            <button onclick = "closePalettePopup()">x</button>
+                        </div>
+                    </div>
+
+                    <div id = "palette-popup-middle">
+                        
+                    </div>
+
+                    <div id = "palette-popup-bottom">
+                        <input id = "palette-color-input" type = "color"></input>
+                        <button onclick = "selectPaletteColor()">Select</button>
+                        <button onclick = "removePaletteColor()">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script src = "../js/commons/constants.js"></script>
+        <script src = "../js/commons/variables.js"></script>
+        <script src = "../js/commons/functions.js"></script>
+        <script src = "../js/commons/storage.js"></script>
+
+        <script src = "../js/managers/customLineManager.js"></script>
+        <script src = "../js/managers/colorPickerManager.js"></script>
+        <script src = "../js/managers/lineManager.js"></script>
+        <script src = "../js/managers/triangleManager.js"></script>
+        <script src = "../js/managers/rectangleManager.js"></script>
+        <script src = "../js/managers/circleManager.js"></script>
+        <script src = "../js/managers/customShapeManager.js"></script>
+        <script src = "../js/managers/selectManager.js"></script>
+
+
+
+        <script src = "../js/objects/CustomLine.js"></script>
+        <script src = "../js/objects/ColorPicker.js"></script>
+        <script src = "../js/objects/Line.js"></script>
+        <script src = "../js/objects/Triangle.js"></script>
+        <script src = "../js/objects/Rectangle.js"></script>
+        <script src = "../js/objects/Circle.js"></script>
+        <script src = "../js/objects/CustomShape.js"></script>
+        <script src = "../js/objects/Select.js"></script>
+
+
+
+        <script src = "../js/objects/Party.js"></script>
+        <script src = "../js/objects/Player.js"></script>
+        <script src = "../js/objects/Canvas.js"></script>
+
+        <script src = "../js/menus/game.js"></script>
+    </body>
+</html>
