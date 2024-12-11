@@ -26,7 +26,7 @@ Multiplayer Paint is a multiplayer painting platform developed as part of the Ne
    ```bash
    docker run -p 3000:3000 app
    ```
-5. Open your web browser and navigate to \`http://localhost:3000\` to access Multiplayer-Paint.
+5. Open your web browser and navigate to http://localhost:3000 to access Multiplayer-Paint.
 
 ---
 
