@@ -1,8 +1,8 @@
-# Paint-Online
-## Advanced JavaScript Project 2023/2024
+# Multiplayer Paint
+## Advanced Javascript project for the 2024/2025 network programming course in FMI
 
 ### Overview
-Paint-Online is a multiplayer painting platform developed as part of the Network Programming 2024/2025 course at FMI. It allows users to connect over a network, draw collaboratively, and enjoy creative activities in real time.
+Multiplayer Paint is a multiplayer painting platform developed as part of the Network Programming 2024/2025 course at FMI. It allows users to connect over a network, draw collaboratively, and enjoy creative activities in real time.
 
 ---
 
