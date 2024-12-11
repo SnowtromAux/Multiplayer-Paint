@@ -15,17 +15,17 @@ Multiplayer Paint is a multiplayer painting platform developed as part of the Ne
 ### How to Set Up and Start the Project on the Main Machine
 1. Open your terminal or command prompt.
 2. Navigate to the directory where the project is saved:
-   \`\`\`bash
+   ```bash
    cd path/to/project
-   \`\`\`
+   ```
 3. Build the Docker image:
-   \`\`\`bash
+   ```bash
    docker build -t app .
-   \`\`\`
+   ```
 4. Run the Docker container:
-   \`\`\`bash
+   ```bash
    docker run -p 3000:3000 app
-   \`\`\`
+   ```
 5. Open your web browser and navigate to \`http://localhost:3000\` to access Multiplayer-Paint.
 
 ---
@@ -35,17 +35,17 @@ Multiplayer Paint is a multiplayer painting platform developed as part of the Ne
 2. Ensure the device is connected to the same network as the main machine.
 3. Find the main machine's local IP address:
    - Open the terminal on the main machine and run:
-     \`\`\`bash
+     ```bash
      ifconfig # On Linux/Mac
      ipconfig # On Windows
-     \`\`\`
+     ```
    - Look for an IP address in the format \`10.108.XX.XX\` or \`192.168.XX.XX\`.
 
 4. On the connecting device, open a web browser and enter the following in the address bar:
-   \`\`\`
+   ```
    MAIN_MACHINE_LOCAL_IP_ADDRESS:3000
-   \`\`\`
+   ```
    Example:
-   \`\`\`
+   ```
    10.108.4.25:3000
-   \`\`\`
+   ```
