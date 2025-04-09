@@ -1,8 +1,8 @@
 # Multiplayer Paint
-## Advanced Javascript project for the 2024/2025 software technologies course in FMI
+## Advanced Javascript project for the 2024/2025 Software Technologies course in FMI
 
 ### Overview
-Multiplayer Paint is a multiplayer painting platform developed as part of the Network Programming 2024/2025 course at FMI. It allows users to connect over a network, draw collaboratively, and enjoy creative activities in real time.
+Multiplayer Paint is a multiplayer painting platform developed as part of the Software Technologies 2024/2025 course at FMI. It allows users to connect over a network, draw collaboratively, and enjoy creative activities in real time.
 
 ---
 
